@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    align-items: center;
+    background: white;
+    color: #fff;
+    display: flex;
+    font: 30px/1.375 "Lato", arial, sans-serif;
+    flex-flow: column nowrap;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw;
+}
+
+.note {
+    font-size: 0.500em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: gray;
+    margin: 10px 0;
+}
+
+.title {
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: gray;
+}
+
+#search {
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid gray;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5em 0;
+    padding: 0.5em 0.5em 0.5em 1em;
+    transition: all 0.5s;
+    width: 500px;
+}
+
+#search:hover, #search:focus {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#search button,
+#search input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    outline: 0;
+}
+
+#search button {
+    color: rgba(0, 0, 0, 0.79);
+    cursor: pointer;
+    padding: 0 0.25em;
+}
+
+#search input {
+    color: rgba(0, 0, 0, 0.79);
+    flex: 1;
+}
+
+#search input::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.79);
+}
+
+#search input:-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.79);
+}
+
+#search input::placeholder {
+    color: rgba(0, 0, 0, 0.79);
+}
+
+#search .spinner {
+    color: rgba(0, 0, 0, 0.79);
+    -webkit-animation: spinner 1s infinite linear;
+    animation: spinner 1s infinite linear;
+    display: none;
+    padding: 0 0.25em;
+}
+
+#search.loading button {
+
+    display: none;
+}
+
+#search.loading .spinner {
+    display: block;
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.back-button {
+    position: fixed; /* Tugmani ekranning burchagiga mahkamlash */
+    top: 20px; /* Yuqoridagi masofani sozlash */
+    left: 20px; /* Chapdagi masofani sozlash */
+    background-color: #f0f0f0; /* Tugma fon rangi */
+    padding: 10px; /* Tugma ichidagi bo'sh joy */
+    border-radius: 8px; /* Yumaloq burchaklar */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* SVG va matn orasidagi bo'shliq */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* So'lg'in soyalar */
+}
+
+.back-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.back-button h3 {
+    margin: 0;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.79);
+}

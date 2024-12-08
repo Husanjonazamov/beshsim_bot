@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+<br />
+{% block content %}
+<div class="mt-4 flex items-start ml-4 mb-4">
+  <a
+    href="{% url 'sims' %}"
+    class="text-blue-500 hover:underline flex items-center"
+  >
+    <!-- SVG ikonasi -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-6 h-6 mr-2"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M11 17l-5-5m0 0l5-5m-5 5h18"
+      />
+    </svg>
+    <span class="text-lg font-medium">Ortga</span>
+  </a>
+</div>
+
+<!-- Cards qismi -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+  {% for category in categorys %}
+  <a
+    href="{% url 'numbers' sim_id=sim_id category_id=category.id %}"
+    class="block bg-white dark:bg-gray-900 rounded-lg border border-gray-300 shadow-lg p-8 text-lg font-semibold text-gray-800 text-center transition duration-200 transform hover:scale-105 active:scale-95 hover:shadow-2xl hover:border-gray-500 w-full"
+  >
+    <div class="flex justify-center items-center h-18 w-full">
+      <span class="truncate text-black dark:text-gray-200 text-xl max-w-full">{{ category.name }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock content %}

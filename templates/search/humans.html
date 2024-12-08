@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-6 max-w-2xl mx-auto bg-white dark:bg-transparent rounded-lg relative">
+
+  <!-- Sarlavha -->
+  <h1 class="text-2xl font-bold mb-4 text-center">Raqamlarni qidirish</h1>
+
+  <div class="mt-4 flex items-start ml-2 mb-4">
+    <a
+      href="{% url 'sims' %}"
+      class="text-blue-500 hover:underline flex items-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11 17l-5-5m0 0l5-5m-5 5h18"
+        />
+      </svg>
+      <span class="text-lg font-medium">Ortga qaytish</span>
+    </a>
+  </div>
+
+  <form method="GET" action="{% url 'humans_search' %}" class="mb-6" onsubmit="return validateForm()">
+    <div class="flex items-center relative">
+      <input
+        type="text"
+        id="query-input"
+        name="query"
+        value="{{ query }}"
+        maxlength="4"
+        placeholder="Oxirgi to'rt raqamni kiriting"
+        class="border bg-white dark:bg-transparent border-gray-300 dark:border-gray-700 rounded-l-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        type="submit"
+        id="search-btn"
+        class="bg-blue-500 text-white rounded-r-lg p-2 hover:bg-blue-600 transition duration-300 font-bold flex items-center justify-center relative"
+      >
+        <span id="search-text">Qidirish</span>
+        <svg
+          id="search-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5 ml-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 16l-4-4m0 0l4-4m-4 4h16"
+          />
+        </svg>
+        <!-- Loading spinner inside button -->
+        <div
+          id="loading-spinner"
+          class="hidden absolute inset-0 flex items-center justify-center"
+        >
+          <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </button>
+    </div>
+    <p id="error-message" class="text-red-500 text-sm mt-2 hidden flex items-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12h6m-3-3v6m-7 4a8 8 0 1116 0 8 8 0 01-16 0z"
+        />
+      </svg>
+      Kiritilgan raqam oxirgi 4 ta bo'lishi kerak.
+    </p>
+  </form>
+
+  <!-- Animatsion natija -->
+  <div id="search-animation" class="hidden text-center my-6">
+    <div class="text-blue-500 font-bold mb-4">Izlanmoqda...</div>
+    <div class="flex justify-center">
+      <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  </div>
+
+  <!-- Natijalar -->
+  {% if numbers %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% for number in numbers %}
+      <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-300 shadow-lg p-4 flex items-center justify-center transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-gray-500">
+          <!-- Raqam ustiga bosilganda raqam haqida ma'lumotlar sahifasiga o'tadi -->
+          <a href="{% url 'search_number_detail' number.number %}" class="text-2xl font-bold text-gray-800 dark:text-gray-200 transition-all duration-500 transform hover:scale-110 hover:text-blue-500">
+              +{{ number.number }}
+          </a>
+      </div>
+  {% endfor %}
+  
+    </div>
+  {% else %}
+    {% if message %}
+       <p id="no-results" class="text-center text-gray-600 mt-6">{{ message }}</p>
+    {% else %}
+        <p id="no-results" class="text-center text-gray-600 mt-6">Iltimos, raqamning oxirgi 4 ta qismini kiriting va natijalarni ko'ring.</p>
+    {% endif %}
+  {% endif %}
+
+</div>
+
+{% endblock %}

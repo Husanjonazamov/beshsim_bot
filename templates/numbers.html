@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-6 max-w-2xl mx-auto bg-white dark:bg-transparent rounded-lg relative">
+
+  <!-- Ortga qaytish matni (chapda) -->
+  <div class="mb-4 flex justify-between items-center">
+    <a
+      href="{% url 'categories' sim_id=sim_id %}"
+      class="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition duration-300 font-bold"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11 17l-5-5m0 0l5-5m-5 5h18"
+        />
+      </svg>
+      <span class="text-lg font-bold">Ortga</span>
+    </a>
+
+    {% if query %}
+    <a
+      href="{% url 'numbers' sim_id=sim_id category_id=category_id %}"
+      class="text-blue-500 hover:text-blue-600 transition duration-300 text-lg font-bold"
+    >
+      Qidiruvni tozalash
+    </a>
+    {% endif %}
+  </div>
+
+  <!-- Sarlavha -->
+  <h1 class="text-2xl font-bold mb-4 text-center">Raqamlarni qidirish</h1>
+
+  <!-- Qidiruv formasi -->
+  <form
+    method="GET"
+    action="{% url 'numbers' sim_id=sim_id category_id=category_id %}"
+    class="mb-6"
+  >
+    <div class="flex items-center">
+      <input
+        type="text"
+        name="query"
+        value="{{ query }}"  
+        maxlength="4"
+        placeholder="To'rt raqamni kiriting"
+        class="border bg-white dark:bg-transparent border-gray-300 dark:border-gray-700 rounded-l-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        type="submit"
+        class="bg-blue-500 text-white rounded-r-lg p-2 hover:bg-blue-600 transition duration-300 font-bold"
+      >
+        Qidirish
+      </button>
+    </div>
+  </form>
+
+  <!-- Raqamlar ro'yxati -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {% if page_obj.object_list %}
+      {% for number in page_obj.object_list %}
+      <div
+        class="bg-white dark:bg-gray-900 rounded-lg border border-gray-300 shadow-lg p-4 flex items-center justify-center transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-gray-500"
+      >
+        <!-- Raqam ustiga bosilganda raqam haqida ma'lumotlar sahifasiga o'tadi -->
+        <a
+          href="{% url 'number_detail' number.id %}"
+          class="text-2xl font-bold text-gray-800 dark:text-gray-200"
+        >
+          +99{{ number.number }}
+        </a>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="text-center text-gray-500 dark:text-gray-400 text-lg font-semibold">
+        Hech qanday natija topilmadi
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Sahifalash (Paginator) -->
+  <div class="mt-6 flex justify-center">
+    <nav class="inline-flex space-x-2">
+      <!-- Oldingi sahifa -->
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&query={{ query }}" 
+           class="flex items-center px-2 py-1 text-gray-700 hover:text-gray-900 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+      {% endif %}
+
+      <!-- Sahifa raqamlari -->
+      {% if page_obj.paginator.num_pages > 1 %}
+        {% for num in page_range %}
+          {% if page_obj.number == num %}
+            <span class="px-3 py-2 bg-blue-500 text-white rounded-lg text-sm">{{ num }}</span>
+          {% else %}
+            <a href="?page={{ num }}&query={{ query }}" 
+               class="px-3 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-lg text-sm">
+              {{ num }}
+            </a>
+          {% endif %}
+        {% endfor %}
+        {% if last_page > page_range|last %}
+          <span class="px-3 py-2">...</span>
+          <a href="?page={{ last_page }}&query={{ query }}" 
+             class="px-3 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-lg text-sm">{{ last_page }}</a>
+        {% endif %}
+      {% endif %}
+
+      <!-- Keyingi sahifa -->
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&query={{ query }}" 
+           class="flex items-center px-2 py-1 text-gray-700 hover:text-gray-900 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      {% endif %}
+    </nav>
+  </div>
+</div>
+
+<!-- Telefon uchun stil -->
+<style>
+nav.inline-flex {
+    flex-wrap: nowrap; /* Tugmalar bir qatorda joylashadi */
+    justify-content: center;
+    overflow-x: auto; /* Agar tugmalar bir qatorga sig‘masa, o'ngga-songa surish imkoniyati */
+}
+
+nav.inline-flex a, nav.inline-flex span {
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin: 5px 3px;
+    white-space: nowrap; /* Matnni bitta qatorda saqlaydi */
+}
+
+@media (max-width: 640px) {
+    nav.inline-flex {
+        flex-wrap: nowrap; /* Telefon versiyasi uchun ham bitta qatorda qoldirish */
+        justify-content: flex-start;
+        overflow-x: scroll; /* Tugmalarni o'ngga-songa skroll qilish imkoniyati */
+        -webkit-overflow-scrolling: touch; /* Telefonlarda skroll qilishni silliq qiladi */
+    }
+
+    nav.inline-flex a, nav.inline-flex span {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+        margin: 5px 2px;
+    }
+}
+</style>
+{% endblock %}

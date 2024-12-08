@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <form method="POST" action="{% url 'add-numbers' %}" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        {% csrf_token %}
+
+        <!-- Category tanlov -->
+        <div class="mb-4">
+            <label for="category" class="block text-gray-700 font-bold mb-2">Kategoriya tanlang:</label>
+            <select id="category" name="category" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Sim tanlov -->
+        <div class="mb-4">
+            <label for="sim" class="block text-gray-700 font-bold mb-2">Kompaniyani tanlang:</label>
+            <select id="sim" name="sim" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                {% for sim in sims %}
+                <option value="{{ sim.id }}">{{ sim.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Raqamlarni kiritish -->
+        <div class="mb-4">
+            <label for="numbers" class="block text-gray-700 font-bold mb-2">Raqamlarni kiriting (vergul yoki bo'sh joy bilan ajratilgan):</label>
+            <textarea id="numbers" name="numbers" rows="5" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+
+        <!-- Saqlash tugmasi -->
+        <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-full md:w-auto">
+            Saqlash
+        </button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div id="loader" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+  <div class="w-16 h-16 border-4 border-t-blue-500 border-white rounded-full animate-spin"></div>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
+  <a
+    href="{% url 'ucell' %}"
+    class="block bg-white dark:bg-gray-800 rounded-lg p-4 overflow-hidden flex items-center gap-4 transition-transform duration-300 hover:scale-105 shadow-xl"
+  >
+    <img
+      class="w-24 h-20 object-contain transition-transform duration-300 transform"
+      src="{% static 'images/ucell.png' %}"
+      alt="Ucell logo"
+    />
+    <span class="text-xl font-semibold truncate max-w-full">Ucell</span>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-400 ml-auto">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+
+  <a
+    href="{% url 'beeline' %}"
+    class="block bg-white dark:bg-gray-800 rounded-lg p-4 overflow-hidden flex items-center gap-4 transition-transform duration-300 hover:scale-105 shadow-xl"
+  >
+    <img
+      class="w-24 h-20 object-contain transition-transform duration-300 transform"
+      src="{% static 'images/Beeline_logo.jpg' %}"
+      alt="Beeline logo"
+    />
+    <span class="text-xl font-semibold truncate max-w-full">Beeline</span>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-400 ml-auto">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+
+  <a
+    href="{% url 'uztelecom' %}"
+    class="block bg-white dark:bg-gray-800 rounded-lg p-4 overflow-hidden flex items-center gap-4 transition-transform duration-300 hover:scale-105 shadow-xl"
+  >
+    <img
+      class="w-24 h-20 object-contain transition-transform duration-300 transform"
+      src="{% static 'images/uzmobile.jpg' %}"
+      alt="Uzmobile logo"
+    />
+    <span class="text-xl font-semibold truncate max-w-full">Uzmobile</span>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-400 ml-auto">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+
+  <a
+    href="{% url 'humans' %}"
+    class="block bg-white dark:bg-gray-800 rounded-lg p-4 overflow-hidden flex items-center gap-4 transition-transform duration-300 hover:scale-105 shadow-xl"
+  >
+    <img
+      class="w-24 h-20 object-contain transition-transform duration-300 transform"
+      src="{% static 'images/humans.png' %}"
+      alt="Humans logo"
+    />
+    <span class="text-xl font-semibold truncate max-w-full">Humans</span>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-400 ml-auto">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  </a>
+
+  {% for sim in sims %}
+    <a
+      href="{% url 'categories' sim.id %}"
+      class="block bg-white dark:bg-gray-800 rounded-lg p-4 overflow-hidden flex items-center gap-4 transition-transform duration-300 hover:scale-105 shadow-xl"
+    >
+      <img
+        class="w-24 h-20 object-contain transition-transform duration-300 transform"
+        src="{{ sim.logo.url }}"
+        alt="Sim logo"
+      />
+      <span class="text-xl font-semibold truncate max-w-full">{{ sim.name }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-400 ml-auto">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </a>
+  {% endfor %}
+</div>
+
+{% if request.user.is_superuser %}
+<div class="mt-6 flex justify-center">
+  <a
+    href="{% url 'add-numbers' %}"
+    class="bg-gradient-to-r from-green-400 to-blue-500 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-110"
+  >
+    <span class="text-lg">Raqam qo'shish</span>
+  </a>
+</div>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll("a[href]");
+    const loader = document.getElementById("loader");
+
+    links.forEach((link) => {
+      link.addEventListener("click", function () {
+        loader.classList.remove("hidden");
+        loader.classList.add("flex");
+      });
+    });
+  });
+</script>
+
+{% endblock content %}

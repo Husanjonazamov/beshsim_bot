@@ -1,0 +1,57 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="p-6 max-w-2xl mx-auto bg-white dark:bg-transparent rounded-lg">
+  <h1 class="text-2xl font-bold mb-4 text-center">Raqam haqida ma'lumot</h1>
+
+  <!-- Ortga tugmasi, "Raqam haqida ma'lumot" matnining pastiga va chap tomonga -->
+  <div class="flex justify-start mb-4">
+    <a
+      href="{% url 'numbers' sim_id=number.company.id category_id=number.category.id %}"
+      class="text-blue-500 hover:underline flex items-center font-semibold"
+    >
+      <!-- 'font-semibold' qo'shildi -->
+      <!-- SVG ikonasi -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11 17l-5-5m0 0l5-5m-5 5h18"
+        />
+      </svg>
+      <span class="text-lg font-medium">Ortga</span>
+    </a>
+  </div>
+
+  <div class="bg-gray-100 dark:bg-transparent rounded-lg p-4">
+    <h2 class="text-xl font-semibold">Raqam: +99{{ number.number }}</h2>
+    <p class="mt-2 text-gray-700 dark:text-gray-300">
+      Bu raqamga oid ma'lumotlar:
+    </p>
+    <ul class="list-disc ml-6 mt-2">
+      <li><strong>Sim:</strong> {{ number.company }}</li>
+      <li><strong>Kategoriya:</strong> {{ number.category }}</li>
+    </ul>
+    <br />
+    <strong>Telegram: <a class="text-blue-500" href="https://t.me/Bakhodir_3123">@Bakhodir_3123</a></strong>
+    <br />
+    <strong>Telefon: <a class="text-blue-500" href="tel:+998906273143">+998 90 627 31 43</a></strong> 
+  </div>
+
+  <div class="mt-6 flex justify-center">
+    <a
+      href="tel:+998906273143"
+      class="bg-blue-500 text-white rounded-lg py-2 px-4 shadow transition duration-300 transform hover:bg-blue-600 hover:scale-105"
+    >
+      Bog'lanish
+    </a>
+  </div>
+</div>
+{% endblock content %}
