@@ -1,12 +1,10 @@
-version: '3.11'
-
 services:
   bot:
     build:
       context: .
     volumes:
       - .:/code
-      - sqlite_data:/code/db  
+      - sqlite_data:/code/db
     environment:
       - DEBUG=True
     ports:
